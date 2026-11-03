@@ -3,9 +3,13 @@ node_modules/
 .env*
 !.env.example
 .agents/
+skills-lock.json
 .work/
 test-results/
 playwright-report/
 *.tsbuildinfo
 .vercel/
 artifacts/
+
+.vercel
+.env*
