@@ -141,6 +141,16 @@ export type Locale = z.infer<typeof localeSchema>;
 
 const studentInput = { studentId: idSchema };
 export const actionSchema = z.discriminatedUnion("action", [
+  z.object({
+    action: z.literal("configurePlan"),
+    ...studentInput,
+    gross: moneySchema.positive(),
+    discount: moneySchema,
+    taxBps: z.number().int().min(0).max(5000),
+    start: daySchema,
+    end: daySchema,
+    dues: z.array(daySchema).min(3).max(4),
+  }),
   z.object({ action: z.literal("consent"), granted: z.boolean() }),
   z.object({ action: z.literal("language"), locale: localeSchema }),
   z.object({

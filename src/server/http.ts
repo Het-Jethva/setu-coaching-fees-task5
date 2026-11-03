@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { unstable_rethrow } from "next/navigation";
 import { AppError, demand } from "./db";
 export async function body<T extends z.ZodType>(
   request: Request,
@@ -15,6 +16,7 @@ export async function body<T extends z.ZodType>(
   return schema.parse(JSON.parse(text));
 }
 export function failure(error: unknown) {
+  unstable_rethrow(error);
   if (error instanceof AppError)
     return Response.json({ error: error.message }, { status: error.status });
   if (error instanceof z.ZodError || error instanceof SyntaxError)

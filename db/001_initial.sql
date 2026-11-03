@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS import_previews (id uuid PRIMARY KEY, workspace uuid 
 CREATE TABLE IF NOT EXISTS consent_events (id uuid PRIMARY KEY, workspace uuid REFERENCES workspaces ON DELETE CASCADE, person_id text NOT NULL, granted boolean NOT NULL, at timestamptz NOT NULL DEFAULT now(), policy_version text NOT NULL DEFAULT 'demo-v1');
 CREATE TABLE IF NOT EXISTS auth_attempts (workspace uuid REFERENCES workspaces ON DELETE CASCADE, at timestamptz NOT NULL DEFAULT now());
 CREATE INDEX IF NOT EXISTS auth_attempts_recent ON auth_attempts(workspace,at);
+CREATE TABLE IF NOT EXISTS plan_revisions (id uuid PRIMARY KEY, workspace uuid NOT NULL, student_id text NOT NULL, previous_plan jsonb NOT NULL, next_plan jsonb NOT NULL, at timestamptz NOT NULL DEFAULT now(), FOREIGN KEY(workspace,student_id) REFERENCES students ON DELETE CASCADE);
 CREATE OR REPLACE FUNCTION preserve_financial_history() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF TG_OP='UPDATE' OR pg_trigger_depth()=1 THEN RAISE EXCEPTION 'Posted financial history is immutable; record a reversal'; END IF; RETURN OLD; END $$;
 DROP TRIGGER IF EXISTS immutable_ledger ON ledger_events;
 CREATE TRIGGER immutable_ledger BEFORE UPDATE OR DELETE ON ledger_events FOR EACH ROW EXECUTE FUNCTION preserve_financial_history();

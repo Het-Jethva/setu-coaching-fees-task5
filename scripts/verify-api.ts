@@ -62,16 +62,14 @@ assert.equal(state.students.length, 80);
 const original = state.students.find((s) => s.id === "STU-0587");
 assert.ok(original);
 assert.equal(financials(original).instalments[0]?.balance, 1500000);
-const checkout = z
-  .object({ checkoutId: z.string() })
-  .parse(
-    await r.act({
-      action: "checkout",
-      studentId: original.id,
-      instalmentId: original.plan.instalments[0]?.id,
-      amount: 1500000,
-    }),
-  );
+const checkout = z.object({ checkoutId: z.string() }).parse(
+  await r.act({
+    action: "checkout",
+    studentId: original.id,
+    instalmentId: original.plan.instalments[0]?.id,
+    amount: 1500000,
+  }),
+);
 await Promise.all([
   r.act({
     action: "completeCheckout",
@@ -100,6 +98,60 @@ assert.ok(
 process.stdout.write(
   "PASS: sample seed, duplicate callbacks, receipt uniqueness, immediate reminder cancellation.\n",
 );
+const allocationToCorrect = paid.events.find(
+  (e) => e.kind === "allocation" && e.receiptId === checkout.checkoutId,
+);
+assert.ok(allocationToCorrect);
+await r.act({
+  action: "reverse",
+  studentId: paid.id,
+  eventId: allocationToCorrect.id,
+  reason: "Correct a duplicate bank posting",
+});
+assert.ok(
+  (await r.state()).reminders.some(
+    (m) =>
+      m.instalmentId === original.plan.instalments[0]?.id &&
+      m.status === "pending",
+  ),
+);
+const unpaid = state.students.find((s) => s.id === "STU-0219");
+assert.ok(unpaid);
+const newPlan = {
+  action: "configurePlan",
+  studentId: unpaid.id,
+  gross: 12000000,
+  discount: 600000,
+  taxBps: 1800,
+  start: unpaid.plan.start,
+  end: unpaid.plan.end,
+  dues: [0, 60, 120, 180].map((n) => addDays(unpaid.plan.start, n)),
+};
+await r.act({ ...newPlan, discount: 13000000 }, 400);
+await r.act(newPlan);
+const configured = (await r.state()).students.find((s) => s.id === unpaid.id);
+assert.ok(configured);
+assert.equal(configured.plan.instalments.length, 4);
+assert.ok(configured.plan.instalments.every((i) => i.amount === 2850000));
+const firstPayment = z
+  .object({ checkoutId: z.string() })
+  .parse(
+    await r.act({
+      action: "checkout",
+      studentId: unpaid.id,
+      instalmentId: configured.plan.instalments[0]?.id,
+      amount: 10000,
+    }),
+  );
+await r.act({
+  action: "completeCheckout",
+  checkoutId: firstPayment.checkoutId,
+  outcome: "success",
+});
+await r.act(newPlan, 409);
+process.stdout.write(
+  "PASS: payment reversal reopens unsent reminders; discount/four-instalment revision is protected after payment.\n",
+);
 
 await r.parent();
 await r.act(
@@ -122,9 +174,11 @@ await r.staff();
 await r.act({ action: "runReminders" });
 const remindersAfter = (await r.state()).reminders;
 assert.ok(
-  remindersAfter
-    .filter((m) => m.instalmentId === original.plan.instalments[0]?.id)
-    .every((m) => m.status !== "sent"),
+  remindersAfter.some(
+    (m) =>
+      m.instalmentId === original.plan.instalments[0]?.id &&
+      m.status === "sent",
+  ),
 );
 const sentBefore = remindersAfter.filter((m) => m.status === "sent").length;
 await r.act({ action: "runReminders" });
@@ -161,25 +215,21 @@ state = await r.state();
 const aarav = state.students.find((s) => s.id === "STU-0412");
 assert.ok(aarav);
 const withdrawalDate = addDays(aarav.plan.start, 30);
-let quote = z
-  .object({ version: z.string(), refund: z.number() })
-  .parse(
-    await r.act({
-      action: "refundPreview",
-      studentId: aarav.id,
-      on: withdrawalDate,
-    }),
-  );
-const added = z
-  .object({ checkoutId: z.string() })
-  .parse(
-    await r.act({
-      action: "checkout",
-      studentId: aarav.id,
-      instalmentId: aarav.plan.instalments[1]?.id,
-      amount: 10000,
-    }),
-  );
+let quote = z.object({ version: z.string(), refund: z.number() }).parse(
+  await r.act({
+    action: "refundPreview",
+    studentId: aarav.id,
+    on: withdrawalDate,
+  }),
+);
+const added = z.object({ checkoutId: z.string() }).parse(
+  await r.act({
+    action: "checkout",
+    studentId: aarav.id,
+    instalmentId: aarav.plan.instalments[1]?.id,
+    amount: 10000,
+  }),
+);
 await r.act({
   action: "completeCheckout",
   checkoutId: added.checkoutId,
@@ -194,15 +244,13 @@ await r.act(
   },
   409,
 );
-quote = z
-  .object({ version: z.string(), refund: z.number() })
-  .parse(
-    await r.act({
-      action: "refundPreview",
-      studentId: aarav.id,
-      on: withdrawalDate,
-    }),
-  );
+quote = z.object({ version: z.string(), refund: z.number() }).parse(
+  await r.act({
+    action: "refundPreview",
+    studentId: aarav.id,
+    on: withdrawalDate,
+  }),
+);
 await Promise.all([
   r.act({
     action: "withdraw",
@@ -283,16 +331,14 @@ const bad = z
     await r.act({ action: "previewImport", batch, kind: "attendance", csv }),
   );
 assert.ok(bad.errors.length);
-const valid = z
-  .object({ previewId: z.string() })
-  .parse(
-    await r.act({
-      action: "previewImport",
-      batch,
-      kind: "attendance",
-      csv: `student_id,date,status\nSTU-0412,${state.today},present\n`,
-    }),
-  );
+const valid = z.object({ previewId: z.string() }).parse(
+  await r.act({
+    action: "previewImport",
+    batch,
+    kind: "attendance",
+    csv: `student_id,date,status\nSTU-0412,${state.today},present\n`,
+  }),
+);
 await r.act({ action: "confirmImport", previewId: valid.previewId });
 await r.act({ action: "confirmImport", previewId: valid.previewId });
 assert.equal(
@@ -301,27 +347,23 @@ assert.equal(
     ?.attendance.filter((a) => a.date === state.today).length,
   1,
 );
-const tests = z
-  .object({ previewId: z.string() })
-  .parse(
-    await r.act({
-      action: "previewImport",
-      batch,
-      kind: "tests",
-      csv: `student_id,test_name,date,marks,maximum_marks\nSTU-0412,Import verification,${state.today},81,100\n`,
-    }),
-  );
+const tests = z.object({ previewId: z.string() }).parse(
+  await r.act({
+    action: "previewImport",
+    batch,
+    kind: "tests",
+    csv: `student_id,test_name,date,marks,maximum_marks\nSTU-0412,Import verification,${state.today},81,100\n`,
+  }),
+);
 await r.act({ action: "confirmImport", previewId: tests.previewId });
-const invalid = z
-  .object({ previewId: z.null() })
-  .parse(
-    await r.act({
-      action: "previewImport",
-      batch,
-      kind: "tests",
-      csv: `student_id,test_name,date,marks,maximum_marks\nSTU-0412,Invalid,${state.today},101,100\n`,
-    }),
-  );
+const invalid = z.object({ previewId: z.null() }).parse(
+  await r.act({
+    action: "previewImport",
+    batch,
+    kind: "tests",
+    csv: `student_id,test_name,date,marks,maximum_marks\nSTU-0412,Invalid,${state.today},101,100\n`,
+  }),
+);
 assert.equal(invalid.previewId, null);
 process.stdout.write(
   "PASS: all-or-nothing CSV previews, batch ownership, repeated confirmation, score validation.\n",

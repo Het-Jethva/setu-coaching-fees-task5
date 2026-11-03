@@ -1,0 +1,7 @@
+.env*
+.agents/
+.work/
+artifacts/
+output/
+tests/
+scripts/verify-*.ts

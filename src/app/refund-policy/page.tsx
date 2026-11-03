@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { Brand } from "@/components/shared";
 import { Policy } from "@/components/parent";
 import {
@@ -29,9 +30,9 @@ export default function Page() {
           : "Published demo policy and assignment assumptions"}
       </p>
       <Policy locale={locale} />
-      <a className="text-link" href="/">
+      <Link className="text-link" href="/">
         {locale === "hi" ? "पोर्टल खोलें" : "Open your portal"}
-      </a>
+      </Link>
     </main>
   );
 }

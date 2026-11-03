@@ -53,6 +53,7 @@ import type { Controller, PayTarget } from "@/components/types";
 import { Nothing, Notice } from "@/components/shared";
 import { Instalments, Receipts, Academics } from "@/components/parent";
 import { amountInput } from "@/lib/client";
+import { FeePlanEditor } from "@/components/fee-plan";
 
 export function AccountsOverview({
   c,
@@ -444,6 +445,9 @@ export function StudentLedger({
               <span className="muted">
                 {dateLabel(s.plan.start)} to {dateLabel(s.plan.end)}
               </span>
+            </div>
+            <div className="mb-4">
+              <FeePlanEditor key={s.id} c={c} s={s} />
             </div>
             <Instalments c={c} s={s} onPay={onPay} />
           </section>

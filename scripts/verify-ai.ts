@@ -31,6 +31,7 @@ await call("/api/auth", {
   id: "central",
   password: "SetuDemo2026!",
 });
+const before = snapshotSchema.parse(await call("/api/state"));
 const result = await call("/api/action", {
   action: "assess",
   batch: "JEE 2027 Morning",
@@ -56,9 +57,11 @@ if (flags[0])
     state.students.find((s) => s.id === flags[0]?.id)?.risk?.dismissed,
     true,
   );
-assert.ok(
-  state.students.every((s) => s.events.every((e) => e.kind !== "reversal")),
+assert.deepEqual(
+  state.students.map((s) => [s.id, s.plan, s.events]),
+  before.students.map((s) => [s.id, s.plan, s.events]),
 );
+assert.deepEqual(state.receipts, before.receipts);
 process.stdout.write(
   `PASS: ${assessed.length} real assessments persisted, ${flags.length} high-risk results, cache reuse and false-flag handling verified.\n`,
 );

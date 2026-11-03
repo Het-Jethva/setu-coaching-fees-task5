@@ -12,4 +12,4 @@ playwright-report/
 artifacts/
 
 .vercel
-.env*
+!.env.example

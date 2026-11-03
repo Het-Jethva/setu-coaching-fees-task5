@@ -2,13 +2,16 @@ import { createHash, randomUUID } from "node:crypto";
 import { z } from "zod";
 import {
   eventSchema,
-  moneySchema,
+  planSchema,
+  offsets,
   type Actor,
   type Day,
   type Student,
 } from "@/domain/model";
 import {
   activeEvents,
+  addDays,
+  splitFee,
   financials,
   refundQuote,
   rupees,
@@ -27,6 +30,68 @@ export const ledgerVersion = (s: Student) =>
   createHash("sha256")
     .update(JSON.stringify([s.plan, s.events]))
     .digest("hex");
+export async function configurePlan(
+  a: Actor,
+  input: {
+    studentId: string;
+    gross: number;
+    discount: number;
+    taxBps: number;
+    start: Day;
+    end: Day;
+    dues: Day[];
+  },
+) {
+  requireAccounts(a);
+  demand(
+    input.discount < input.gross && input.end >= input.start,
+    "Discount must be below the fee, and course dates must be in order.",
+  );
+  demand(
+    input.dues.every(
+      (due, i) =>
+        due >= input.start &&
+        due <= input.end &&
+        (i === 0 || due > input.dues[i - 1]!),
+    ),
+    "Due dates must be in increasing order within the course dates.",
+  );
+  return db().begin(async (tx) => {
+    const s = await lockedStudent(tx, a, input.studentId);
+    const receipts =
+      await tx`SELECT id FROM receipts WHERE workspace=${a.workspace} AND student_id=${s.id}`;
+    demand(
+      !s.events.length && !receipts.length,
+      "A plan with posted money or a withdrawal cannot be edited. Use visible corrections instead.",
+      409,
+    );
+    const revision = randomUUID();
+    const amounts = splitFee(
+      input.gross - input.discount,
+      input.dues.length === 3 ? 3 : 4,
+    );
+    const plan = planSchema.parse({
+      ...input,
+      instalments: input.dues.map((due, i) => ({
+        id: `${s.id}-${revision.slice(0, 8)}-I${i + 1}`,
+        due,
+        amount: amounts[i],
+      })),
+    });
+    await tx`INSERT INTO plan_revisions(id,workspace,student_id,previous_plan,next_plan) VALUES(${revision},${a.workspace},${s.id},${tx.json(s.plan)},${tx.json(plan)})`;
+    await tx`UPDATE students SET plan=${tx.json(plan)},revision=revision+1 WHERE workspace=${a.workspace} AND id=${s.id}`;
+    await tx`UPDATE reminders SET status='cancelled' WHERE workspace=${a.workspace} AND student_id=${s.id} AND status='pending'`;
+    await tx`UPDATE checkouts SET status='failure' WHERE workspace=${a.workspace} AND student_id=${s.id} AND status='pending'`;
+    for (const i of plan.instalments)
+      for (const offset of offsets)
+        await tx`INSERT INTO reminders(workspace,id,student_id,instalment_id,scheduled) VALUES(${a.workspace},${`${i.id}:${offset}`},${s.id},${i.id},${addDays(i.due, offset)})`;
+    return {
+      saved: true,
+      message:
+        "Fee plan saved. Instalments and pending reminders were rebuilt.",
+    };
+  });
+}
 const checkoutSchema = z.object({
   id: z.string(),
   student_id: z.string(),
@@ -303,6 +368,8 @@ export async function reverse(
         reason,
       }),
     );
+    if (original.kind === "allocation" && !financials(s).withdrawn)
+      await tx`UPDATE reminders SET status='pending' WHERE workspace=${a.workspace} AND student_id=${s.id} AND instalment_id=${original.instalmentId} AND status='cancelled' AND sent_at IS NULL`;
     return { reversed: true };
   });
 }

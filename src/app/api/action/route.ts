@@ -2,6 +2,7 @@ import { actionSchema } from "@/domain/model";
 import { actor, consent, language } from "@/server/access";
 import {
   allocateReceipt,
+  configurePlan,
   completeCheckout,
   createCheckout,
   previewWithdrawal,
@@ -19,6 +20,8 @@ export async function POST(req: Request) {
     const b = await body(req, actionSchema),
       a = await actor();
     switch (b.action) {
+      case "configurePlan":
+        return json(await configurePlan(a, b));
       case "consent":
         await consent(a, b.granted);
         return json({ saved: true });

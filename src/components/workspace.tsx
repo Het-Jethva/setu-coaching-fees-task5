@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import useSWR from "swr";
 import { z } from "zod";
 import {
   LayoutDashboard,
@@ -38,55 +39,47 @@ import {
   AccountsOverview,
 } from "@/components/accounts";
 
+async function fetchSnapshot(): Promise<Snapshot | null> {
+  const response = await fetch("/api/state", { cache: "no-store" });
+  if (response.status === 401) return null;
+  const value: unknown = await response.json();
+  if (!response.ok) {
+    const e = z.object({ error: z.string() }).safeParse(value);
+    throw new Error(e.success ? e.data.error : "Could not load the workspace.");
+  }
+  return snapshotSchema.parse(value);
+}
+function subscribeLocation(changed: () => void) {
+  window.addEventListener("popstate", changed);
+  return () => window.removeEventListener("popstate", changed);
+}
 export default function Workspace() {
-  const [data, setData] = useState<Snapshot | null>(null),
-    [loading, setLoading] = useState(true),
-    [busy, setBusy] = useState(false),
+  const {
+    data,
+    error: loadError,
+    isLoading: loading,
+    mutate,
+  } = useSWR<Snapshot | null, Error>("/api/state", fetchSnapshot, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  });
+  const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [notice, setNotice] = useState("");
   const [screen, setScreen] = useState("overview"),
     [studentId, setStudentId] = useState(""),
-    [pay, setPay] = useState<PayTarget | null>(null),
+    [manualPay, setPay] = useState<PayTarget | null>(null),
     [policy, setPolicy] = useState(false);
-  const initialQuery = useRef(false);
+  const [dismissedQuery, setDismissedQuery] = useState<string | null>(null);
+  const search = useSyncExternalStore(
+    subscribeLocation,
+    () => window.location.search,
+    () => "",
+  );
   const refresh = useCallback(async () => {
-    const response = await fetch("/api/state", { cache: "no-store" });
-    if (response.status === 401) {
-      setData(null);
-      setLoading(false);
-      return;
-    }
-    const value: unknown = await response.json();
-    if (!response.ok) {
-      const e = z.object({ error: z.string() }).safeParse(value);
-      throw new Error(
-        e.success ? e.data.error : "Could not load the workspace.",
-      );
-    }
-    setData(snapshotSchema.parse(value));
-    setLoading(false);
-  }, []);
+    await mutate();
+  }, [mutate]);
   useEffect(() => {
-    refresh().catch((e) => {
-      setError(
-        e instanceof Error ? e.message : "Could not load the workspace.",
-      );
-      setLoading(false);
-    });
-  }, [refresh]);
-  useEffect(() => {
-    if (
-      data &&
-      (data.actor.role === "accounts" || data.actor.consent) &&
-      !initialQuery.current
-    ) {
-      const q = new URLSearchParams(window.location.search);
-      const s = q.get("student"),
-        i = q.get("instalment");
-      if (s && i && data.students.some((x) => x.id === s))
-        setPay({ studentId: s, instalmentId: i });
-      initialQuery.current = true;
-    }
     document.documentElement.lang = data?.actor.locale ?? "en";
   }, [data]);
   const run = async (task: () => Promise<void>, success?: string) => {
@@ -120,7 +113,25 @@ export default function Workspace() {
       </main>
     );
   if (!data)
-    return <Login busy={busy} error={error} run={run} onSignedIn={refresh} />;
+    return (
+      <Login
+        busy={busy}
+        error={error || loadError?.message || ""}
+        run={run}
+        onSignedIn={refresh}
+      />
+    );
+  const q = new URLSearchParams(search),
+    linkedStudent = q.get("student"),
+    linkedInstalment = q.get("instalment");
+  const pay =
+    manualPay ??
+    (search !== dismissedQuery &&
+    linkedStudent &&
+    linkedInstalment &&
+    data.students.some((s) => s.id === linkedStudent)
+      ? { studentId: linkedStudent, instalmentId: linkedInstalment }
+      : null);
   const openPay = (target: PayTarget) => {
     setError("");
     setPay(target);
@@ -280,7 +291,16 @@ export default function Workspace() {
           <button onClick={() => setPolicy(true)}>{t.policy}</button>
         </footer>
       </div>
-      {pay && <Checkout c={c} target={pay} onClose={() => setPay(null)} />}
+      {pay && (
+        <Checkout
+          c={c}
+          target={pay}
+          onClose={() => {
+            setPay(null);
+            setDismissedQuery(search);
+          }}
+        />
+      )}
       <Dialog open={policy} onOpenChange={setPolicy}>
         <DialogContent className="policy-dialog">
           <DialogHeader>

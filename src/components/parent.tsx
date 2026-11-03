@@ -684,7 +684,7 @@ export function Policy({ locale }: { locale: Locale }) {
       <small>
         This is a published demo policy based on explicitly agreed assignment
         assumptions. Production tax treatment, refund rules, identity
-        verification, and legal compliance require the client's approval.
+        verification, and legal compliance require the client&apos;s approval.
       </small>
     </div>
   );
