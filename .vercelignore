@@ -3,5 +3,6 @@
 .work/
 artifacts/
 output/
+submission/
 tests/
 scripts/verify-*.ts

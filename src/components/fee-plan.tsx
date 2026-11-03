@@ -67,6 +67,17 @@ export function FeePlanEditor({ c, s }: { c: Controller; s: Student }) {
             onSubmit={(e) => {
               e.preventDefault();
               void c.run(async () => {
+                const dates = daySchema
+                  .array()
+                  .safeParse([
+                    start,
+                    end,
+                    ...Array.from({ length: count }, (_, i) => dues[i] ?? ""),
+                  ]);
+                if (!dates.success)
+                  throw new Error(
+                    "Choose a valid course date and a due date for every instalment.",
+                  );
                 await c.act({
                   action: "configurePlan",
                   studentId: s.id,
@@ -131,7 +142,15 @@ export function FeePlanEditor({ c, s }: { c: Controller; s: Student }) {
                 <NativeSelect
                   id="plan-count"
                   value={count}
-                  onChange={(e) => setCount(e.target.value === "3" ? 3 : 4)}
+                  onChange={(e) => {
+                    setCount(e.target.value === "3" ? 3 : 4);
+                    setDues((old) => [
+                      old[0] ?? "",
+                      old[1] ?? "",
+                      old[2] ?? "",
+                      old[3] || end,
+                    ]);
+                  }}
                 >
                   <NativeSelectOption value="3">
                     3 instalments
@@ -195,7 +214,7 @@ export function FeePlanEditor({ c, s }: { c: Controller; s: Student }) {
                 . The first instalments receive any rounding paise.
               </p>
             )}
-          {c.error && <Notice error message={c.error} />}
+            {c.error && <Notice error message={c.error} />}
             <Button type="submit" disabled={c.busy}>
               {c.busy ? "Saving…" : "Save fee plan"}
             </Button>

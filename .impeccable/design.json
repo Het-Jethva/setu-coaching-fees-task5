@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T10:03:31.891591+00:00",
+  "title": "Design System: Setu coaching fees",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Deep teal",
+        "tonalRamp": [
+          "oklch(0.150 0.0320 188.22)",
+          "oklch(0.260 0.0514 188.22)",
+          "oklch(0.380 0.0656 188.22)",
+          "oklch(0.500 0.0705 188.22)",
+          "oklch(0.620 0.0656 188.22)",
+          "oklch(0.740 0.0514 188.22)",
+          "oklch(0.860 0.0300 188.22)",
+          "oklch(0.950 0.0110 188.22)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(0.150 0.0000 89.88)",
+          "oklch(0.260 0.0000 89.88)",
+          "oklch(0.380 0.0000 89.88)",
+          "oklch(0.500 0.0000 89.88)",
+          "oklch(0.620 0.0000 89.88)",
+          "oklch(0.740 0.0000 89.88)",
+          "oklch(0.860 0.0000 89.88)",
+          "oklch(0.950 0.0000 89.88)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(0.150 0.0084 213.48)",
+          "oklch(0.260 0.0136 213.48)",
+          "oklch(0.380 0.0173 213.48)",
+          "oklch(0.500 0.0186 213.48)",
+          "oklch(0.620 0.0173 213.48)",
+          "oklch(0.740 0.0136 213.48)",
+          "oklch(0.860 0.0079 213.48)",
+          "oklch(0.950 0.0029 213.48)"
+        ]
+      },
+      "soft-surface": {
+        "role": "neutral",
+        "displayName": "Soft surface",
+        "tonalRamp": [
+          "oklch(0.150 0.0020 179.74)",
+          "oklch(0.260 0.0032 179.74)",
+          "oklch(0.380 0.0041 179.74)",
+          "oklch(0.500 0.0044 179.74)",
+          "oklch(0.620 0.0041 179.74)",
+          "oklch(0.740 0.0032 179.74)",
+          "oklch(0.860 0.0019 179.74)",
+          "oklch(0.950 0.0007 179.74)"
+        ]
+      },
+      "selected-surface": {
+        "role": "primary",
+        "displayName": "Pale teal",
+        "tonalRamp": [
+          "oklch(0.150 0.0051 176.31)",
+          "oklch(0.260 0.0083 176.31)",
+          "oklch(0.380 0.0105 176.31)",
+          "oklch(0.500 0.0113 176.31)",
+          "oklch(0.620 0.0105 176.31)",
+          "oklch(0.740 0.0083 176.31)",
+          "oklch(0.860 0.0048 176.31)",
+          "oklch(0.950 0.0018 176.31)"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted ink",
+        "tonalRamp": [
+          "oklch(0.150 0.0083 191.69)",
+          "oklch(0.260 0.0133 191.69)",
+          "oklch(0.380 0.0169 191.69)",
+          "oklch(0.500 0.0182 191.69)",
+          "oklch(0.620 0.0169 191.69)",
+          "oklch(0.740 0.0133 191.69)",
+          "oklch(0.860 0.0078 191.69)",
+          "oklch(0.950 0.0028 191.69)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "tonalRamp": [
+          "oklch(0.150 0.0047 174.25)",
+          "oklch(0.260 0.0076 174.25)",
+          "oklch(0.380 0.0097 174.25)",
+          "oklch(0.500 0.0104 174.25)",
+          "oklch(0.620 0.0097 174.25)",
+          "oklch(0.740 0.0076 174.25)",
+          "oklch(0.860 0.0044 174.25)",
+          "oklch(0.950 0.0016 174.25)"
+        ]
+      },
+      "input-stroke": {
+        "role": "neutral",
+        "displayName": "Input stroke",
+        "tonalRamp": [
+          "oklch(0.150 0.0068 175.66)",
+          "oklch(0.260 0.0110 175.66)",
+          "oklch(0.380 0.0140 175.66)",
+          "oklch(0.500 0.0150 175.66)",
+          "oklch(0.620 0.0140 175.66)",
+          "oklch(0.740 0.0110 175.66)",
+          "oklch(0.860 0.0064 175.66)",
+          "oklch(0.950 0.0024 175.66)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus teal",
+        "tonalRamp": [
+          "oklch(0.150 0.0372 185.06)",
+          "oklch(0.260 0.0597 185.06)",
+          "oklch(0.380 0.0761 185.06)",
+          "oklch(0.500 0.0818 185.06)",
+          "oklch(0.620 0.0761 185.06)",
+          "oklch(0.740 0.0597 185.06)",
+          "oklch(0.860 0.0348 185.06)",
+          "oklch(0.950 0.0128 185.06)"
+        ]
+      },
+      "destructive": {
+        "role": "neutral",
+        "displayName": "Destructive red",
+        "tonalRamp": [
+          "oklch(0.150 0.0691 30.37)",
+          "oklch(0.260 0.1110 30.37)",
+          "oklch(0.380 0.1416 30.37)",
+          "oklch(0.500 0.1523 30.37)",
+          "oklch(0.620 0.1416 30.37)",
+          "oklch(0.740 0.1110 30.37)",
+          "oklch(0.860 0.0648 30.37)",
+          "oklch(0.950 0.0238 30.37)"
+        ]
+      },
+      "attention": {
+        "role": "neutral",
+        "displayName": "Attention amber",
+        "tonalRamp": [
+          "oklch(0.150 0.0516 69.69)",
+          "oklch(0.260 0.0828 69.69)",
+          "oklch(0.380 0.1057 69.69)",
+          "oklch(0.500 0.1136 69.69)",
+          "oklch(0.620 0.1057 69.69)",
+          "oklch(0.740 0.0828 69.69)",
+          "oklch(0.860 0.0484 69.69)",
+          "oklch(0.950 0.0178 69.69)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Accounts page headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section and student headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default text."
+      },
+      "amount": {
+        "displayName": "Parent amount",
+        "purpose": "The next payment amount."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Metadata and compact table headers; minimum 12px."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Compact supporting labels."
+      },
+      "data": {
+        "displayName": "Data",
+        "purpose": "Table text and compact descriptions."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "dialog-duration",
+        "value": "100ms",
+        "purpose": "Brief fade and scale on dialog entry and exit."
+      },
+      {
+        "name": "reduced-motion-duration",
+        "value": "0.01ms",
+        "purpose": "Animation and transition duration under reduced-motion preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1200px"
+      },
+      {
+        "name": "rail-to-navigation",
+        "value": "800px"
+      },
+      {
+        "name": "phone",
+        "value": "520px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "description": "Primary button using the shared compact control shape.",
+      "html": "<button class=\"ds-primary-button\">Save changes</button>",
+      "css": ".ds-primary-button{background:var(--primary);color:var(--primary-foreground);border:1px solid transparent;border-radius:var(--radius);height:32px;padding:0 10px;font:500 14px \"Manrope Variable\",\"Noto Sans Devanagari Variable\",sans-serif;cursor:pointer;transition:background-color .15s}.ds-primary-button:hover{background:color-mix(in srgb,var(--primary) 80%,transparent)}.ds-primary-button:focus-visible{outline:none;border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in srgb,var(--ring) 50%,transparent)}.ds-primary-button:active{transform:translateY(1px)}.ds-primary-button:disabled{opacity:.5;pointer-events:none}",
+      "refersTo": "button-primary"
+    },
+    {
+      "name": "Outline button",
+      "kind": "button",
+      "description": "Outline button using the shared compact control shape.",
+      "html": "<button class=\"ds-outline-button\">Save changes</button>",
+      "css": ".ds-outline-button{background:var(--background);color:var(--foreground);border:1px solid var(--border);border-radius:var(--radius);height:32px;padding:0 10px;font:500 14px \"Manrope Variable\",\"Noto Sans Devanagari Variable\",sans-serif;cursor:pointer;transition:background-color .15s}.ds-outline-button:hover{background:var(--muted)}.ds-outline-button:focus-visible{outline:none;border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in srgb,var(--ring) 50%,transparent)}.ds-outline-button:active{transform:translateY(1px)}.ds-outline-button:disabled{opacity:.5;pointer-events:none}",
+      "refersTo": "button-outline"
+    },
+    {
+      "name": "Ghost button",
+      "kind": "button",
+      "description": "Ghost button using the shared compact control shape.",
+      "html": "<button class=\"ds-ghost-button\">Save changes</button>",
+      "css": ".ds-ghost-button{background:transparent;color:var(--foreground);border:1px solid transparent;border-radius:var(--radius);height:32px;padding:0 10px;font:500 14px \"Manrope Variable\",\"Noto Sans Devanagari Variable\",sans-serif;cursor:pointer;transition:background-color .15s}.ds-ghost-button:hover{background:var(--muted)}.ds-ghost-button:focus-visible{outline:none;border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in srgb,var(--ring) 50%,transparent)}.ds-ghost-button:active{transform:translateY(1px)}.ds-ghost-button:disabled{opacity:.5;pointer-events:none}"
+    },
+    {
+      "name": "Text field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labelled input with the shared focus ring.",
+      "html": "<label class=\"ds-field\">Payment reference<input class=\"ds-input\" placeholder=\"Bank reference\"></label>",
+      "css": ".ds-field{display:grid;gap:8px;color:var(--foreground);font:500 14px \"Manrope Variable\",sans-serif}.ds-input{height:32px;padding:4px 10px;border:1px solid var(--input);border-radius:var(--radius);background:transparent;color:var(--foreground);font:400 14px \"Manrope Variable\",sans-serif;caret-color:var(--primary)}.ds-input::placeholder{color:var(--muted-foreground)}.ds-input:hover{border-color:var(--muted-foreground)}.ds-input:focus-visible{outline:none;border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in srgb,var(--ring) 50%,transparent)}"
+    },
+    {
+      "name": "Account navigation",
+      "kind": "nav",
+      "description": "Active pale-teal item and quiet inactive item.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Accounts\"><button class=\"ds-nav-active\" aria-current=\"page\">Overview</button><button>Students &amp; fees</button></nav>",
+      "css": ".ds-nav{display:grid;gap:7px;background:var(--sidebar);padding:18px}.ds-nav button{min-height:41px;border:1px solid transparent;border-radius:var(--radius);padding:0 10px;background:transparent;color:var(--foreground);text-align:left;font:500 14px \"Manrope Variable\",sans-serif;cursor:pointer}.ds-nav .ds-nav-active{background:var(--secondary);color:var(--secondary-foreground)}.ds-nav button:hover{background:var(--muted)}.ds-nav button:focus-visible{outline:none;border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in srgb,var(--ring) 50%,transparent)}"
+    },
+    {
+      "name": "Status badge",
+      "kind": "chip",
+      "refersTo": "badge-secondary",
+      "description": "Compact labelled state in pale teal.",
+      "html": "<span class=\"ds-badge\">Up to date</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;justify-content:center;height:20px;padding:2px 8px;border:1px solid transparent;border-radius:9999px;background:var(--secondary);color:var(--secondary-foreground);font:500 12px \"Manrope Variable\",sans-serif;white-space:nowrap}"
+    },
+    {
+      "name": "Section panel",
+      "kind": "card",
+      "refersTo": "section-panel",
+      "description": "Flat ruled container for records and actions.",
+      "html": "<section class=\"ds-panel\"><h2>Instalments</h2><p>Unpaid balances and due dates.</p></section>",
+      "css": ".ds-panel{display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--border);border-radius:12px;background:var(--background);color:var(--foreground)}.ds-panel h2{margin:0;font:600 18px/1.4 \"Manrope Variable\",sans-serif;letter-spacing:-.02em}.ds-panel p{margin:0;color:var(--muted-foreground);font:400 13px/1.55 \"Manrope Variable\",sans-serif}"
+    },
+    {
+      "name": "Parent amount",
+      "kind": "custom",
+      "description": "Tabular payment amount with a quiet due-date line.",
+      "html": "<div class=\"ds-payment\"><p>Amount due now</p><div class=\"ds-amount\">₹15,000</div><p>Due 10 Oct 2026</p></div>",
+      "css": ".ds-payment{padding:28px 0;color:var(--foreground)}.ds-payment p{margin:0;color:var(--muted-foreground);font:400 13px/1.55 \"Manrope Variable\",\"Noto Sans Devanagari Variable\",sans-serif}.ds-amount{margin:3px 0 11px;font:650 44px/1.2 \"Manrope Variable\",\"Noto Sans Devanagari Variable\",sans-serif;letter-spacing:-.025em;font-variant-numeric:tabular-nums}@media(max-width:520px){.ds-amount{font-size:40px}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Clear Fee Statement",
+    "overview": "Setu is a restrained operating interface. White surfaces, quiet rules, teal actions, and precise amounts give financial records a familiar reading order. The English and Hindi interfaces share the same structure; language changes do not change the visual hierarchy.\n\nThe system uses open sections and compact tables rather than decorative dashboard widgets. Staff views accommodate dense records, while parent views give the next payment room to stand apart. Both retain the same typography, controls, and status language.",
+    "keyCharacteristics": [
+      "A light, paper-like surface with one primary action color.",
+      "Self-hosted Latin and Devanagari type in a shared sans-serif stack.",
+      "Tabular money, labelled exceptions, and thin dividing rules.",
+      "Flat content surfaces and visible keyboard focus."
+    ],
+    "rules": [
+      {
+        "name": "The Exception Rule",
+        "body": "Amber and red communicate a named state; ordinary actions use teal.",
+        "section": "colors"
+      },
+      {
+        "name": "The Stable Numerals Rule",
+        "body": "Monetary values keep tabular numerals so amounts align and remain easy to compare.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Content Rule",
+        "body": "Content boundaries use rules and tonal surfaces; elevation belongs to an active overlay or control state.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** use the effective custom light-theme tokens from this file and the stylesheet.",
+      "**Do** keep small secondary text opaque and use muted ink for inactive tabs.",
+      "**Do** keep monetary values tabular and align comparable amounts.",
+      "**Do** preserve visible labels, keyboard focus, and readable Hindi when composing new controls.",
+      "**Do** let wide data scroll within its own container on phones."
+    ],
+    "donts": [
+      "**Don't** use amber or red as a general brand accent.",
+      "**Don't** replace the restrained statement and table language with decorative gradients or repeated shadows.",
+      "**Don't** use the generated dark-theme defaults as evidence of a reviewed dark mode.",
+      "**Don't** add decorative widgets or imagery that compete with a financial task."
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "@fontsource-variable/instrument-sans";
+import "@fontsource-variable/manrope";
 import "@fontsource-variable/noto-sans-devanagari";
 
 export const metadata: Metadata = {

@@ -13,7 +13,7 @@ Use shadcn/ui primitives with a custom statement-oriented composition. This is a
 | Rule | `#DCE5E2` |
 | Attention | `#935C00` |
 
-Use Instrument Sans for English and Noto Sans Devanagari for Hindi, self-hosted through installed font packages. Keep body text at 15–16px, compact data at 14px, and parent payment amounts at 40–48px. Use tabular numerals for money. Controls have a consistent 6–8px radius; larger panels use 12px. Avoid decorative gradients and repeated shadows.
+Use Manrope for English and Noto Sans Devanagari for Hindi, self-hosted through installed font packages. The user's final typography request replaced the initial Instrument Sans choice. Keep prose at 16px, table data at 14px, metadata at least 12px, and parent payment amounts at 40–44px. Use tabular numerals for money. Hindi headings use normal tracking and more line height. Controls have a consistent radius; larger panels use 12px. Avoid decorative gradients and repeated shadows. The final extracted tokens are in the root DESIGN.md.
 
 ## Compare compositions
 
