@@ -70,12 +70,14 @@ The previous Gemini proposal was not selected. The following facts come from cur
 - OpenRouter's [pricing page](https://openrouter.ai/pricing) and routing FAQ are not fully consistent about free-plan routing controls. Verify the chosen constraints with the actual key. Do not silently weaken them to make a request succeed.
 - Store `OPENROUTER_API_KEY` only in server-side environment secrets. [Authentication](https://openrouter.ai/docs/api_reference/authentication) uses Bearer tokens.
 
-A platform capability is not a client requirement. Provider accounts and keys have not been inspected or created.
+A platform capability is not a client requirement. At interview time, provider accounts and keys were pending setup dependencies; they are now configured for the deployed personal demo.
 
 ## Interview status
 
-All three interview rounds are resolved. Q6 through Q11 and Q13 through Q16 were accepted as proposed. For Q12, the user delegated selection of a suitable free OpenRouter model. The final [build plan](./build-plan.md) was accepted with the shadcn amendment. Implementation can proceed.
+All three interview rounds are resolved. Q6 through Q11 and Q13 through Q16 were accepted as proposed. For Q12, the user delegated selection of a suitable free OpenRouter model. The final [build plan](./build-plan.md) was accepted with the shadcn amendment.
 
 ## Implementation status
 
-Architecture comparison and application implementation are underway. Product rules are settled. Provider account access and API-key configuration are later setup dependencies.
+All must-haves are implemented and deployed. Local/hosted API journeys, real OpenRouter inference, scheduler retries, phone layouts, and the final typography pass were verified. The public repository, live app, TDD, deployment guide and two-file archive are the delivery artifacts.
+
+The user requested a final Impeccable typography pass and delegated the family choice. The final system uses self-hosted Manrope with Noto Sans Devanagari, readable role sizes and natural Hindi heading spacing. The final extracted system is recorded in the root DESIGN.md.

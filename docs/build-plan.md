@@ -1,6 +1,6 @@
 # Coaching fees build plan
 
-Status: accepted on 3 November 2026 with the user's amendment to use shadcn/ui and the shadcn and frontend-design skills. Implementation is underway.
+Status: accepted on 3 November 2026 with the user's amendment to use shadcn/ui and the shadcn and frontend-design skills. Completed and delivered on 3 November 2026, including the final Manrope typography pass.
 
 This plan implements [the assignment](./assignment.md) and [the accepted decisions](./design.md). The agreed scope includes every must-have, followed by a complete polish pass.
 
@@ -40,15 +40,15 @@ Limit attempts to five per workspace and forty app-wide daily. Use free-only rou
 
 ## Delivery sequence
 
-- [ ] Sketch module boundaries and the data model, then create the application and initial Git history.
-- [ ] Build authentication, consent, reviewer isolation, schema, and repeatable sample-data setup.
-- [ ] Complete ledger, parent checkout, GST receipts, reconciliation, and daily reminder processing.
-- [ ] Complete withdrawal/refund settlement, dashboard totals, corrections, and Tally export.
-- [ ] Complete attendance and test imports, parent academic views, and hosted AI review.
-- [ ] Finish visual polish, Hindi copy, phone layouts, loading states, empty states, and error recovery.
-- [ ] Verify important money and date rules, access boundaries, retry behavior, import behavior, and full reviewer journeys.
-- [ ] Publish the public GitHub repository and deploy the app to Vercel Hobby with Neon Free PostgreSQL. Configure the production daily reminder job and verify deployed flows.
-- [ ] Produce the PDF or Word TDD, `deployment.md`, and a ZIP containing exactly those two files. Verify the archive and links before the deadline of 9 November 2026, 11:59 pm IST.
+- [x] Sketch module boundaries and the data model, then create the application and initial Git history.
+- [x] Build authentication, consent, reviewer isolation, schema, and repeatable sample-data setup.
+- [x] Complete ledger, parent checkout, GST receipts, reconciliation, and daily reminder processing.
+- [x] Complete withdrawal/refund settlement, dashboard totals, corrections, and Tally export.
+- [x] Complete attendance and test imports, parent academic views, and hosted AI review.
+- [x] Finish visual polish, Hindi copy, phone layouts, loading states, empty states, and error recovery.
+- [x] Verify important money and date rules, access boundaries, retry behavior, import behavior, and full reviewer journeys.
+- [x] Publish the public GitHub repository and deploy the app to Vercel Hobby with Neon Free PostgreSQL. Configure the production daily reminder job and verify deployed flows.
+- [x] Produce the PDF or Word TDD, `deployment.md`, and a ZIP containing exactly those two files. Verify the archive and links before the deadline of 9 November 2026, 11:59 pm IST.
 
 ## Deliverables and disclosed limits
 

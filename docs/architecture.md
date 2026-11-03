@@ -31,7 +31,7 @@ Two isolated candidates compared a full balanced-posting journal with a narrower
 
 Use B as the base. Graft A's UTC-day AI-attempt accounting, final-balance recheck before reminders, stable operation keys, and explicit distinction between received and allocated money. Reject a full general-ledger chart of accounts because this product manages fees rather than replacing Tally. Keep normalized operational records and append-only financial facts, with no event bus, background projection worker, or writable cached balances.
 
-The skill's default Claude and Grok model families are unavailable in this session. Both candidate seats used the inherited model, and the separate-family cross-judge was skipped. This comparison establishes the design contract; runtime tests still need to prove the implementation.
+The skill's default Claude and Grok model families were unavailable in this session. Both candidate seats used the inherited model, and the separate-family cross-judge was skipped. Runtime evidence now includes domain tests and full local/hosted HTTP journeys; the comparison alone is not verification.
 
 ## Key invariants
 

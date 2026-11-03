@@ -10,6 +10,4 @@ playwright-report/
 *.tsbuildinfo
 .vercel/
 artifacts/
-
-.vercel
-!.env.example
+tmp/
